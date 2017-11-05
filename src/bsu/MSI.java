@@ -9,8 +9,8 @@ public class MSI {
     private double [] f;
     private double [] x;
     private double [] x_i;
-    private double [] nevyazki;
-    private double norm_nevyazki;
+    private double [] vector_nevyazki;
+    private double normOfVectorNevyazki;
     MSI(){
         N=5;
         Epsilon=0.00001;
@@ -20,8 +20,8 @@ public class MSI {
         f=new double [N];
         x=new double [N];
         x_i=new double [N];
-        nevyazki=new double [N];
-        norm_nevyazki=0;
+        vector_nevyazki=new double [N];
+        normOfVectorNevyazki=0;
     }
 
     ////////////////////Вычисление матрицы B для метода ПИ
@@ -148,19 +148,45 @@ public class MSI {
 
     ////////////////////Вычисление нормы матрицы
     public double calculatorNormOfMatrix(double [][] m,int n){
-        double norma=0;
+        double norm=0;
         double tmp;
         for(int i=0;i<n;i++){
             tmp=0;
             for(int j=0;j<n;j++){
                 tmp += Math.abs(m[i][j]);
             }
-            if(tmp>norma){
-                norma=tmp;
+            if(tmp>norm){
+                norm=tmp;
             }
         }
-        return norma;
+        return norm;
     }
+
+    ////////////////////Вычисление вектора невязки и его нормы
+    private void calculateVectorNevyazkiNorm(){
+        //вектор невязки
+        for(int i=0;i<N;i++){
+            vector_nevyazki[i]=-f[i];
+            for(int j=0;j<N;j++){
+                vector_nevyazki[i] += a[i][j] * x[j];
+            }
+        }
+        System.out.println("Вектор невязки: ");
+        printVector(vector_nevyazki,N);
+
+        //норма вектора невязки
+        normOfVectorNevyazki = 0;
+        for(int i=0;i<N;i++){
+            if(Math.abs(vector_nevyazki[i]) >= normOfVectorNevyazki){
+                normOfVectorNevyazki= vector_nevyazki[i];
+            }
+        }
+        System.out.println("Норма вектора невязки: ");
+        System.out.println(normOfVectorNevyazki);
+    }
+
+
+
 
     ////////////////////Проверка на сходимость
     public void stableCheck(){
@@ -171,5 +197,24 @@ public class MSI {
         else{
             System.out.println("Метод не сходится");
         }
+    }
+
+    ////////////////////Условие продолжения итераций
+    private boolean isConverges(double [] v1, double [] v2, int n){
+        double v[] = new double [n];
+        double norm =0;
+        for(int i=0; i<n; i++){
+            v[i]=v2[i] - v1[i];
+        }
+        for(int i=0;i<n;i++){
+            if(Math.abs(v[i]) >= norm){
+                norm= v[i];
+            }
+        }
+
+        if(Math.abs(norm) < Epsilon){
+            return true;
+        }
+        else{return false;}
     }
 }
