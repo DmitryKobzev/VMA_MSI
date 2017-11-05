@@ -49,7 +49,7 @@ public class MSI {
         }
        printMatrix(symmetricMatrix,N);
 
-        double normSymmetricMatrix=calcNormuMatrix(symmetricMatrix,N);
+        double normSymmetricMatrix=calculatorNormOfMatrix(symmetricMatrix,N);
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 if(i != j){
@@ -99,7 +99,7 @@ public class MSI {
             }
         }
 
-        double  normSymmetricMatrix =calcNormuMatrix(symmetricMatrix,N);
+        double  normSymmetricMatrix =calculatorNormOfMatrix(symmetricMatrix,N);
         for(int i=0; i < N;i++){
             g[i]=f[i] * (1/normSymmetricMatrix);
         }
@@ -136,7 +136,7 @@ public class MSI {
     }
 
     ////////////////////Вычисление нормы вектора
-    public double calcNormuVectora(double []v ,int n ){
+    public double calculatorNormOfVector(double []v ,int n ){
         double norma = 0;
         for(int i=0;i<n;i++){
             if(Math.abs(v[i]) >= norma){
@@ -147,7 +147,7 @@ public class MSI {
     }
 
     ////////////////////Вычисление нормы матрицы
-    public double calcNormuMatrix(double [][] m,int n){
+    public double calculatorNormOfMatrix(double [][] m,int n){
         double norma=0;
         double tmp;
         for(int i=0;i<n;i++){
@@ -160,5 +160,16 @@ public class MSI {
             }
         }
         return norma;
+    }
+
+    ////////////////////Проверка на сходимость
+    public void stableCheck(){
+        boolean flag = false;
+        if(Math.abs(calculatorNormOfMatrix(b,N))<1){
+            System.out.println("Метод сходится");
+        }
+        else{
+            System.out.println("Метод не сходится");
+        }
     }
 }
