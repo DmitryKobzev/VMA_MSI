@@ -217,4 +217,83 @@ public class MSI {
         }
         else{return false;}
     }
+
+    ////////////////////Метод простой итерации
+    public void simpleIterations(){
+        System.out.println("Методом ПИ: ");
+        int iter=0;
+        double iterApri=0;
+        while(true){
+            for(int i=0; i < N;i++){
+                x_i[i] = g[i];
+                for(int j=0;j < N;j++){
+                    x_i[i] += b[i][j] * x[j];
+                }
+            }
+            iter++;
+
+            if(isConverges(x,x_i,N) == true){
+                break;
+            }
+
+            for(int i=0;i < N;i++){
+                x[i] = x_i[i];
+            }
+        }
+
+        for(int i=0;i < N;i++){
+            x[i] = x_i[i];
+        }
+        iterApri = (Math.log(Epsilon * (1 - calculatorNormOfMatrix(b,N))/ calculatorNormOfVector(g,N))) / Math.log(calculatorNormOfMatrix(b,N)) + 1;
+        System.out.println("Априорное количество итераций: ");
+        System.out.println(Math.ceil(iterApri));
+        System.out.println("Количество итераций: ");
+        System.out.println(iter);
+        System.out.println("Вектор решений: ");
+        printVector(x,N);
+        calculateVectorNevyazkiNorm();
+    }
+
+    ////////////////////Метод Гаусса-Зейделя
+    public void G_Z(){
+        System.out.println("Методом Гаусса-Зейделя: ");
+        int iter=0;
+        double iterApri=0;
+
+        for(int i=0;i < N;i++){
+            x[i]=0;
+        }
+        while(true){
+            for(int i=0; i < N;i++){
+                x_i[i] = 0;
+                for(int j=0;j < N;j++){
+                    x_i[i] += b[i][j] * x_i[j];
+                }
+                x_i[i] += g[i];
+            }
+
+            iter++;
+
+            if(isConverges(x,x_i,N) == true){
+                break;
+            }
+
+            for(int i=0;i < N;i++){
+                x[i] = x_i[i];
+            }
+        }
+
+        for(int i=0;i < N;i++){
+            x[i] = x_i[i];
+        }
+
+        iterApri = (Math.log(Epsilon * (1 - calculatorNormOfMatrix(b,N))/ calculatorNormOfVector(g,N))) / Math.log(calculatorNormOfMatrix(b,N)) + 1;
+        System.out.println("Априорное количество итераций: ");
+        System.out.println(Math.ceil(iterApri));
+        System.out.println("Количество итераций: ");
+        System.out.println(iter);
+        System.out.println("Вектор решений: ");
+        printVector(x,N);
+        calculateVectorNevyazkiNorm();
+    }
 }
