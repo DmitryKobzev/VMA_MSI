@@ -14,10 +14,22 @@ public class MSI {
     MSI(){
         N=5;
         Epsilon=0.00001;
-        a=new double[N][N];
+        a=new double[][]{
+                {0.6444, 0.0000, -0.1683, 0.1184, 0.1973},
+                {-0.0395, 0.4208, 0.0000, -0.0802, 0.0263},
+                {0.0132, -0.1184, 0.7627, 0.0145, 0.0460},
+                {0.0395, 0.0000, -0.0960, 0.7627, 0.0000},
+                {0.0263, -0.0395, 0.1907, -0.0158, 0.5523}
+        };
         b=new double [N][N];
         g=new double [N];
-        f=new double [N];
+        f=new double []{
+                1.2677,
+                1.6819,
+                -2.3657,
+                -6.5369,
+                2.8351
+        };
         x=new double [N];
         x_i=new double [N];
         vector_nevyazki=new double [N];
@@ -67,7 +79,7 @@ public class MSI {
     public void printMatrix(double [][]m, int n){
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                System.out.println(m[i][j]+ " ");
+                System.out.print(m[i][j]+ " ");
             }
             System.out.println();
         }
