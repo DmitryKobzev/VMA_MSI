@@ -171,6 +171,8 @@ public class MSI {
                 norm=tmp;
             }
         }
+        System.out.println("Норма ||B||: ");
+        System.out.println(norm);
         return norm;
     }
 
@@ -264,6 +266,7 @@ public class MSI {
         System.out.println("Вектор решений: ");
         printVector(x,N);
         calculateVectorNevyazkiNorm();
+        calculatorNormOfMatrix(b,N);
     }
 
     ////////////////////Метод Гаусса-Зейделя
@@ -307,5 +310,6 @@ public class MSI {
         System.out.println("Вектор решений: ");
         printVector(x,N);
         calculateVectorNevyazkiNorm();
+        calculatorNormOfMatrix(b,N);
     }
 }
